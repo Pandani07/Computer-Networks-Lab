@@ -1,15 +1,24 @@
 BEGIN{
 	totalenq=0;
+	ftppack=0;
+	
 }
 {
 	packettype=$5;
 	event=$1;
-	if(packettype=="tcp")
+	tonode=$10;
+	fromnode=$9;
+	if(packettype=="tcp" && event=="r" && fromnode=="0.0" && tonode=="3.0")
 	{
-		if(event=="+")
 			totalenq++;
+	}
+	else if(packettype=="ftp" && event=="r" && fromnode=="1.0" && tonode=="3.0")
+	{
+		ftppack++;
+
 	}
 }
 END{
-	printf("Total Enque: %d \n",totalenq);	
+	printf("Total packets tcp %d \n",totalenq);
+	printf("Total packets ftp %d \n",ftppack);
 }
