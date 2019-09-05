@@ -1,0 +1,15 @@
+BEGIN{
+	totalenq=0;
+}
+{
+	packettype=$5;
+	event=$1;
+	if(packettype=="tcp")
+	{
+		if(event=="+")
+			totalenq++;
+	}
+}
+END{
+	printf("Total Enque: %d \n",totalenq);	
+}
